@@ -19,9 +19,24 @@ public:
 
 	void GameRun()
 	{
+		std::string userInput = ""; // moved this so we don't make another string for user input
+
 		// This will end up being changed quite a bit but for now (the start of this method) we're going to leave its signature alone
 
 		// This is where the bulk of the game code or game method calls will happen
+		do
+		{
+			std::cout << "1) Start New Game\n 2) Load Game\n 3)Exit" << std::endl;
+			std::cin >> userInput;
+		} while (userInput != "1" && userInput != "2" && userInput != "3");
+
+		std::cout << "Pause" << std::endl;
+		std::cin >> userInput;
+
+		
+
+
+
 
 		while (isGameEnded == false) // this condition may change - we could end up making a bool field that contains context if the game is ended or not
 		{
@@ -41,7 +56,7 @@ public:
 			std::cout << "1) Fight a Monster \n2)Rest\n3)Quit" << std::endl;
 
 			// Create a local string for userinput and allow the user to type
-			std::string userInput = "";
+			
 			std::cin >> userInput;
 
 			// Based off userInput we can run the appropriate methods
