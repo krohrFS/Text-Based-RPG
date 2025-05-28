@@ -59,6 +59,8 @@ public:
 			// Make sure there is a constructor for player character that can handle all of these
 			// Make sure there is a file to read
 			// and alter the menu in GameRun
+
+			LoadGame();
 		}
 		else if (userInput == "3")
 		{
@@ -138,6 +140,71 @@ public:
 
 	}
 
+	void LoadGame()
+	{
+		// Here is where we would pull all of the info out of the file
+		// And run a overloaded constructor on the playercharacter class file to make the pc field
+		std::string loadGame = "";
+
+		std::string name = "";
+		int maxHealth = 0;
+		int currentHealth = 0;
+		int strength = 0;
+		int level = 0;
+		std::ifstream fileRead("saveFile.txt");
+
+		int lineCounter = 0;
+
+		while (std::getline(fileRead, loadGame));
+		{
+			//std::cout << readFile << std::endl;
+
+			// If structure for each line to build the pc object, create local variables in this method to contain the values
+			if (lineCounter == 0)
+			{
+				name = loadGame;
+			}
+			else if (lineCounter == 1)
+			{
+				maxHealth = stoi(loadGame); // when we read from the file it is more than likely going to be a string type so this results in a syntax
+				// error because loadgame is string and maxHealth is int, we know how we are writing the file so we can just convert
+			}
+			else if (lineCounter == 2)
+			{
+				currentHealth = stoi(loadGame);
+
+			}
+			else if (lineCounter == 3)
+			{
+				strength = stoi(loadGame);
+			}
+			else if (lineCounter == 4)
+			{
+				level = stoi(loadGame);
+			}
+
+			// iterate line counter
+			lineCounter++;
+
+		}
+
+		fileRead.close();
+
+		// Outside of the loop we're going to make our pc field be our loaded character
+		// Create new object based on loaded info
+		PlayerCharacter loadedPlayer(name, maxHealth, currentHealth, strength, level);
+		loadedPlayer.DisplayAll();
+
+		Pause();
+		// assign pc field the object
+		pc = loadedPlayer;
+
+		pc.DisplayAll();
+
+		Pause();
+
+	}
+
 	void SaveGame()
 	{
 		// we need to write the player stats and name to a file
@@ -159,7 +226,11 @@ public:
 		MyGame << pc.GetStrength() << std::endl;
 		MyGame << pc.GetLevel(); // note no new line because this is the last line of info for the character
 
-	
+		// Close file
+		MyGame.close();
+
+
+
 
 
 
