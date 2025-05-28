@@ -2,6 +2,7 @@
 #include <iostream>
 #include "PlayerCharacter.cpp"
 #include "Monster.cpp"
+#include <fstream> // allows for file i/o
 
 class GameEngine
 {
@@ -46,6 +47,18 @@ public:
 		else if (userInput == "2")
 		{
 			// this is for loading a character
+			//std::string characterName;
+			//int maxHealth;
+			//int currentHealth;
+			//int strength;
+			//int level;
+			// we need to write to a file the fields of the player character
+			// this will happen below in the GameRun method as part of that menu
+			// HERE however we need to load the playercharacter from the text file
+			// Things that we need to make sure are done before doing this
+			// Make sure there is a constructor for player character that can handle all of these
+			// Make sure there is a file to read
+			// and alter the menu in GameRun
 		}
 		else if (userInput == "3")
 		{
@@ -54,6 +67,7 @@ public:
 
 		}
 		//Pause();
+
 
 
 
@@ -74,7 +88,10 @@ public:
 			Line();
 			std::cout << "Menu Options" << std::endl;
 			Line();
-			std::cout << "1) Fight a Monster \n2)Rest\n3)Quit" << std::endl;
+
+			// This is going to end up changing to have another option save character
+			// We'll need to alter the menu, alter the if statement, create a save method
+			std::cout << "1) Fight a Monster \n2)Rest\n3)Save Character\n4)Quit" << std::endl;
 
 			// Create a local string for userinput and allow the user to type
 			
@@ -95,6 +112,11 @@ public:
 			}
 			else if (userInput == "3")
 			{
+				// This is where we are going to call the save method
+				SaveGame();
+			}
+			else if (userInput == "4")
+			{
 				// Quit Game
 				QuitGame();
 			}
@@ -113,6 +135,33 @@ public:
 			std::string pause;
 			std::cin >> pause;
 		}
+
+	}
+
+	void SaveGame()
+	{
+		// we need to write the player stats and name to a file
+		//std::string characterName;
+		//int maxHealth;
+		//int currentHealth;
+		//int strength;
+		//int level;
+
+		// the goal here is to write each piece of info about the character to a file on it's own line
+		// This creates and opens the saveFile.txt file, I'm going to assume this will always overwrite
+		// So there always only be one save file we're currently not checking if it exists
+		std::ofstream MyGame("saveFile.txt");
+
+		// Write to the file
+		MyGame << pc.GetName() << std::endl;
+		MyGame << pc.GetMaxHealth() << std::endl;
+		MyGame << pc.GetCurrentHealth() << std::endl;
+		MyGame << pc.GetStrength() << std::endl;
+		MyGame << pc.GetLevel(); // note no new line because this is the last line of info for the character
+
+	
+
+
 
 	}
 
@@ -156,6 +205,7 @@ public:
 			// Create a default PlayerCharacter
 			PlayerCharacter newPlayer;
 			pc = newPlayer;
+			pc.SetCharacterName("Tav");
 
 		}
 		else
@@ -165,6 +215,7 @@ public:
 			std::cin >> userInput;
 			PlayerCharacter newPlayer(userInput);
 			pc = newPlayer;
+			pc.SetCharacterName(userInput);
 		}
 
 		characterCreated = true;
