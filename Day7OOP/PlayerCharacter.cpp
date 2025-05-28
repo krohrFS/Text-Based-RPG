@@ -28,6 +28,15 @@ public:
 		level = 1;
 	}
 
+	PlayerCharacter(std::string _name, int _max, int _current, int _strength, int _level)
+	{
+		characterName = _name;
+		maxHealth = _max;
+		currentHealth = _current;
+		strength = _strength;
+		level = _level;
+	}
+
 	// Getters
 	std::string GetName()
 	{
