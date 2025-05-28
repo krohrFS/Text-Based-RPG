@@ -50,9 +50,10 @@ public:
 		else if (userInput == "3")
 		{
 			// This is for exiting the game
+			isGameEnded = true;
 
 		}
-		Pause();
+		//Pause();
 
 
 
