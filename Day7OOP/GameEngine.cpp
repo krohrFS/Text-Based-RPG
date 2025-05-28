@@ -9,6 +9,7 @@ class GameEngine
 	Monster monster;
 	bool characterCreated = false; // this used for a check in the game loop so we don't continually prompt them for their name
 	bool isGameEnded = false; // used for an endgame condition, stops the loop
+	bool isGameNew = true;
 
 public:
 
@@ -24,14 +25,37 @@ public:
 		// This will end up being changed quite a bit but for now (the start of this method) we're going to leave its signature alone
 
 		// This is where the bulk of the game code or game method calls will happen
-		do
+		if (isGameNew == true)
 		{
-			std::cout << "1) Start New Game\n 2) Load Game\n 3)Exit" << std::endl;
-			std::cin >> userInput;
-		} while (userInput != "1" && userInput != "2" && userInput != "3");
+			do
+			{
+				std::cout << "1) Start New Game\n 2) Load Game\n 3)Exit" << std::endl;
+				std::cin >> userInput;
+			} while (userInput != "1" && userInput != "2" && userInput != "3");
+		}
 
-		std::cout << "Pause" << std::endl;
-		std::cin >> userInput;
+		if (userInput == "1")
+		{
+			// This is for creating a new character
+			if (characterCreated == false)
+			{
+				CharacterCreate();
+				pc.DisplayAll();
+			}
+		}
+		else if (userInput == "2")
+		{
+			// this is for loading a character
+		}
+		else if (userInput == "3")
+		{
+			// This is for exiting the game
+
+		}
+		Pause();
+
+
+
 
 		
 
@@ -40,11 +64,7 @@ public:
 
 		while (isGameEnded == false) // this condition may change - we could end up making a bool field that contains context if the game is ended or not
 		{
-			if (characterCreated == false)
-			{
-				CharacterCreate();
-				pc.DisplayAll();
-			}
+
 
 
 			// Game menu
@@ -191,6 +211,13 @@ public:
 
 
 		}
+	}
+
+	void Pause()
+	{
+		std::string pause = "";
+		std::cout << "Pause" << std::endl;
+		std::cin >> pause;
 	}
 
 	
