@@ -3,6 +3,7 @@
 #include "PlayerCharacter.cpp"
 #include "Monster.cpp"
 #include <fstream> // allows for file i/o
+#include <vector>
 
 class GameEngine
 {
@@ -155,39 +156,25 @@ public:
 
 		int lineCounter = 0;
 
+		// Attempting a solution with a vector
+		std::vector<std::string> playerStats;
+
+
+		// TODO should you choose to continue - go ahead and research why it's only pulling the last line from the file
 		while (std::getline(fileRead, loadGame));
 		{
 			//std::cout << readFile << std::endl;
+			playerStats.push_back(loadGame);
 
-			// If structure for each line to build the pc object, create local variables in this method to contain the values
-			if (lineCounter == 0)
-			{
-				name = loadGame;
-			}
-			else if (lineCounter == 1)
-			{
-				maxHealth = stoi(loadGame); // when we read from the file it is more than likely going to be a string type so this results in a syntax
-				// error because loadgame is string and maxHealth is int, we know how we are writing the file so we can just convert
-			}
-			else if (lineCounter == 2)
-			{
-				currentHealth = stoi(loadGame);
-
-			}
-			else if (lineCounter == 3)
-			{
-				strength = stoi(loadGame);
-			}
-			else if (lineCounter == 4)
-			{
-				level = stoi(loadGame);
-			}
-
-			// iterate line counter
-			lineCounter++;
 
 		}
 
+		for (int i = 0; i < playerStats.size(); i++)
+		{
+			std::cout << playerStats[i] << std::endl;
+		}
+
+		Pause();
 		fileRead.close();
 
 		// Outside of the loop we're going to make our pc field be our loaded character
